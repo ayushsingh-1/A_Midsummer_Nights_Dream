@@ -1,0 +1,1012 @@
+Jan 18:
+
+sudo spctl --master-disable 
+sudo spctl --master-enable 
+spctl --status
+
+mongo --authenticationDatabase admin -u admin -p
+
+cs2541_!nstrucT@R_sp20
+
+> show collections
+pages
+users
+> db.pages.find()
+{ "_id" : ObjectId("5e23861dce1b37186be3c234"), "Type" : "Blog", "Title" : "Post 1", "Author" : { "Name" : "Kirstjen Hunter", "Twitter" : "@khunter" }, "Tags" : [ "great", "awesome" ], "Comments" : [ { "User" : "Fred Flinstone", "Content" : "I like this post" }, { "User" : "Barney Seigel", "Content" : "I love this post" } ] }
+> db.pages.insert({"Type":"Blog","Title":"Post 2","Author":{"Name":"Brian Eckhart","Twitter":"@beckhart"},"Tags":["awesome","distinguishing"],"Comments":[{"User":"Sydney Clanstenbury","Content":"I don't like it"},{"User":"Dave Johnson","Content":"I love it"}]})
+WriteResult({ "nInserted" : 1 })
+> db.pages.find({"Content":"I don't like it"})
+> db.pages.find({"Tags":"Awesome"})
+> db.pages.find({"Tags":"awesome"})
+{ "_id" : ObjectId("5e23861dce1b37186be3c234"), "Type" : "Blog", "Title" : "Post 1", "Author" : { "Name" : "Kirstjen Hunter", "Twitter" : "@khunter" }, "Tags" : [ "great", "awesome" ], "Comments" : [ { "User" : "Fred Flinstone", "Content" : "I like this post" }, { "User" : "Barney Seigel", "Content" : "I love this post" } ] }
+{ "_id" : ObjectId("5e238abb315cabea910b44e5"), "Type" : "Blog", "Title" : "Post 2", "Author" : { "Name" : "Brian Eckhart", "Twitter" : "@beckhart" }, "Tags" : [ "awesome", "distinguishing" ], "Comments" : [ { "User" : "Sydney Clanstenbury", "Content" : "I don't like it" }, { "User" : "Dave Johnson", "Content" : "I love it" } ] }
+> db.pages.find({"Comments":{"Content":"I don't like it"}})
+> db.pages.find({Comments.Content:"I don't like it"})
+2020-01-18T17:54:29.169-0500 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:23
+> db.pages.find({"Comments.Contents":"I don't like it"})
+> db.pages.find({"Author.Name":"Kirstjen"})
+> db.pages.find({"Author":{"Name":"Kirstjen"}})
+> db.pages.find({"Author":{"Name":"Kirstjen Hunter"}})
+> db.pages.find({"Author":{"Name":"Kirstjen Hunter","Twitter":"@khunter"}})
+{ "_id" : ObjectId("5e23861dce1b37186be3c234"), "Type" : "Blog", "Title" : "Post 1", "Author" : { "Name" : "Kirstjen Hunter", "Twitter" : "@khunter" }, "Tags" : [ "great", "awesome" ], "Comments" : [ { "User" : "Fred Flinstone", "Content" : "I like this post" }, { "User" : "Barney Seigel", "Content" : "I love this post" } ] }
+> db.pages.find({"Comments":[{"User":"Dave Johnson","Content":"I love it"}]})
+> db.pages.find({"Tags":"awesome"})
+{ "_id" : ObjectId("5e23861dce1b37186be3c234"), "Type" : "Blog", "Title" : "Post 1", "Author" : { "Name" : "Kirstjen Hunter", "Twitter" : "@khunter" }, "Tags" : [ "great", "awesome" ], "Comments" : [ { "User" : "Fred Flinstone", "Content" : "I like this post" }, { "User" : "Barney Seigel", "Content" : "I love this post" } ] }
+{ "_id" : ObjectId("5e238abb315cabea910b44e5"), "Type" : "Blog", "Title" : "Post 2", "Author" : { "Name" : "Brian Eckhart", "Twitter" : "@beckhart" }, "Tags" : [ "awesome", "distinguishing" ], "Comments" : [ { "User" : "Sydney Clanstenbury", "Content" : "I don't like it" }, { "User" : "Dave Johnson", "Content" : "I love it" } ] }
+
+> db.pages.find({"Comments":[{"User":"Dave Johnson","Content":"I love it"}]})
+> db.pages.find({"Comments.User":"Fred Flinstone"})
+{ "_id" : ObjectId("5e23861dce1b37186be3c234"), "Type" : "Blog", "Title" : "Post 1", "Author" : { "Name" : "Kirstjen Hunter", "Twitter" : "@khunter" }, "Tags" : [ "great", "awesome" ], "Comments" : [ { "User" : "Fred Flinstone", "Content" : "I like this post" }, { "User" : "Barney Seigel", "Content" : "I love this post" } ] }
+> db.pages.find({"Comments.Content":"I don't like it"})
+{ "_id" : ObjectId("5e238abb315cabea910b44e5"), "Type" : "Blog", "Title" : "Post 2", "Author" : { "Name" : "Brian Eckhart", "Twitter" : "@beckhart" }, "Tags" : [ "awesome", "distinguishing" ], "Comments" : [ { "User" : "Sydney Clanstenbury", "Content" : "I don't like it" }, { "User" : "Dave Johnson", "Content" : "I love it" } ] }
+> 
+
+Jan 21:
+
+> use learning_mongo
+switched to db learning_mongo
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+test    0.000GB
+users   0.000GB
+> db.cars.insert({"Make":"Subaru"})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+admin           0.000GB
+config          0.000GB
+learning_mongo  0.000GB
+local           0.000GB
+test            0.000GB
+users           0.000GB
+> show collections
+cars
+> print("Cars");
+Cars
+> var a=[1,2,3];
+> a
+[ 1, 2, 3 ]
+
+> for(i=0;i<10000;i++){
+... db.numbers.insert({"Numbers":i})
+... }
+WriteResult({ "nInserted" : 1 })
+> db
+learning_mongo
+> collection
+2020-01-21T13:52:08.447-0500 E  QUERY    [js] ReferenceError: collection is not defined :
+@(shell):1:1
+> show collections
+cars
+numbers
+> db.numbers.find()
+{ "_id" : ObjectId("5e274849dc25b2db0a2febdc"), "Numbers" : 0 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febdd"), "Numbers" : 1 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febde"), "Numbers" : 2 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febdf"), "Numbers" : 3 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe0"), "Numbers" : 4 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe1"), "Numbers" : 5 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe2"), "Numbers" : 6 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe3"), "Numbers" : 7 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe4"), "Numbers" : 8 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe5"), "Numbers" : 9 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe6"), "Numbers" : 10 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe7"), "Numbers" : 11 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe8"), "Numbers" : 12 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febe9"), "Numbers" : 13 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febea"), "Numbers" : 14 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febeb"), "Numbers" : 15 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febec"), "Numbers" : 16 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febed"), "Numbers" : 17 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febee"), "Numbers" : 18 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febef"), "Numbers" : 19 }
+Type "it" for more
+> it
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf0"), "Numbers" : 20 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf1"), "Numbers" : 21 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf2"), "Numbers" : 22 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf3"), "Numbers" : 23 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf4"), "Numbers" : 24 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf5"), "Numbers" : 25 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf6"), "Numbers" : 26 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf7"), "Numbers" : 27 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf8"), "Numbers" : 28 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febf9"), "Numbers" : 29 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febfa"), "Numbers" : 30 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febfb"), "Numbers" : 31 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febfc"), "Numbers" : 32 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febfd"), "Numbers" : 33 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febfe"), "Numbers" : 34 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2febff"), "Numbers" : 35 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2fec00"), "Numbers" : 36 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2fec01"), "Numbers" : 37 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2fec02"), "Numbers" : 38 }
+{ "_id" : ObjectId("5e274849dc25b2db0a2fec03"), "Numbers" : 39 }
+Type "it" for more
+> db.numbers.find().explain()
+{
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "learning_mongo.numbers",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			
+		},
+		"queryHash" : "8B3D4AB8",
+		"planCacheKey" : "8B3D4AB8",
+		"winningPlan" : {
+			"stage" : "COLLSCAN",
+			"direction" : "forward"
+		},
+		"rejectedPlans" : [ ]
+	},
+	"serverInfo" : {
+		"host" : "A1990.local",
+		"port" : 27017,
+		"version" : "4.2.1",
+		"gitVersion" : "edf6d45851c0b9ee15548f0f847df141764a317e"
+	},
+	"ok" : 1
+}
+> db.numbers.count()
+10000
+
+> db.numbers.find({"Numbers":99})
+{ "_id" : ObjectId("5e274849dc25b2db0a2fec3f"), "Numbers" : 99 }
+> db.numbers.find({"Number":128}).explain()
+{
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "learning_mongo.numbers",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			"Number" : {
+				"$eq" : 128
+			}
+		},
+		"queryHash" : "E8D9797B",
+		"planCacheKey" : "E8D9797B",
+		"winningPlan" : {
+			"stage" : "COLLSCAN",
+			"filter" : {
+				"Number" : {
+					"$eq" : 128
+				}
+			},
+			"direction" : "forward"
+		},
+		"rejectedPlans" : [ ]
+	},
+	"serverInfo" : {
+		"host" : "A1990.local",
+		"port" : 27017,
+		"version" : "4.2.1",
+		"gitVersion" : "edf6d45851c0b9ee15548f0f847df141764a317e"
+	},
+	"ok" : 1
+}
+> db.numbers.find({"Number":6821}).explain(executionStats)
+2020-01-21T14:00:22.845-0500 E  QUERY    [js] ReferenceError: executionStats is not defined :
+@(shell):1:1
+> db.numbers.find({"Number":2981}).explain("executionStats")
+{
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "learning_mongo.numbers",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			"Number" : {
+				"$eq" : 2981
+			}
+		},
+		"winningPlan" : {
+			"stage" : "COLLSCAN",
+			"filter" : {
+				"Number" : {
+					"$eq" : 2981
+				}
+			},
+			"direction" : "forward"
+		},
+		"rejectedPlans" : [ ]
+	},
+	"executionStats" : {
+		"executionSuccess" : true,
+		"nReturned" : 0,
+		"executionTimeMillis" : 5,
+		"totalKeysExamined" : 0,
+		"totalDocsExamined" : 10000,
+		"executionStages" : {
+			"stage" : "COLLSCAN",
+			"filter" : {
+				"Number" : {
+					"$eq" : 2981
+				}
+			},
+			"nReturned" : 0,
+			"executionTimeMillisEstimate" : 0,
+			"works" : 10002,
+			"advanced" : 0,
+			"needTime" : 10001,
+			"needYield" : 0,
+			"saveState" : 78,
+			"restoreState" : 78,
+			"isEOF" : 1,
+			"direction" : "forward",
+			"docsExamined" : 10000
+		}
+	},
+	"serverInfo" : {
+		"host" : "A1990.local",
+		"port" : 27017,
+		"version" : "4.2.1",
+		"gitVersion" : "edf6d45851c0b9ee15548f0f847df141764a317e"
+	},
+	"ok" : 1
+}
+}
+
+----------------Make sure to name the exact Key when creating an Index------------------
+
+> db.numbers.createIndex({Numbers:1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 2,
+	"numIndexesAfter" : 3,
+	"ok" : 1
+}
+> db.numbers.find({"Numbers":8}).explain("executionStats")
+{
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "learning_mongo.numbers",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			"Numbers" : {
+				"$eq" : 8
+			}
+		},
+		"winningPlan" : {
+			"stage" : "FETCH",
+			"inputStage" : {
+				"stage" : "IXSCAN",
+				"keyPattern" : {
+					"Numbers" : 1
+				},
+				"indexName" : "Numbers_1",
+				"isMultiKey" : false,
+				"multiKeyPaths" : {
+					"Numbers" : [ ]
+				},
+				"isUnique" : false,
+				"isSparse" : false,
+				"isPartial" : false,
+				"indexVersion" : 2,
+				"direction" : "forward",
+				"indexBounds" : {
+					"Numbers" : [
+						"[8.0, 8.0]"
+					]
+				}
+			}
+		},
+		"rejectedPlans" : [ ]
+	},
+	"executionStats" : {
+		"executionSuccess" : true,
+		"nReturned" : 1,
+		"executionTimeMillis" : 0,
+		"totalKeysExamined" : 1,
+		"totalDocsExamined" : 1,
+		"executionStages" : {
+			"stage" : "FETCH",
+			"nReturned" : 1,
+			"executionTimeMillisEstimate" : 0,
+			"works" : 2,
+			"advanced" : 1,
+			"needTime" : 0,
+			"needYield" : 0,
+			"saveState" : 0,
+			"restoreState" : 0,
+			"isEOF" : 1,
+			"docsExamined" : 1,
+			"alreadyHasObj" : 0,
+			"inputStage" : {
+				"stage" : "IXSCAN",
+				"nReturned" : 1,
+				"executionTimeMillisEstimate" : 0,
+				"works" : 2,
+				"advanced" : 1,
+				"needTime" : 0,
+				"needYield" : 0,
+				"saveState" : 0,
+				"restoreState" : 0,
+				"isEOF" : 1,
+				"keyPattern" : {
+					"Numbers" : 1
+				},
+				"indexName" : "Numbers_1",
+				"isMultiKey" : false,
+				"multiKeyPaths" : {
+					"Numbers" : [ ]
+				},
+				"isUnique" : false,
+				"isSparse" : false,
+				"isPartial" : false,
+				"indexVersion" : 2,
+				"direction" : "forward",
+				"indexBounds" : {
+					"Numbers" : [
+						"[8.0, 8.0]"
+					]
+				},
+				"keysExamined" : 1,
+				"seeks" : 1,
+				"dupsTested" : 0,
+				"dupsDropped" : 0
+			}
+		}
+	},
+	"serverInfo" : {
+		"host" : "A1990.local",
+		"port" : 27017,
+		"version" : "4.2.1",
+		"gitVersion" : "edf6d45851c0b9ee15548f0f847df141764a317e"
+	},
+	"ok" : 1
+}
+> 
+
+Jan 26:
+Navigate to where the file is:
+
+(base) mac@A1990 Start % mongoimport --db learning_mongo --collection tours --jsonArray --file tours.json 
+
+> show dbs
+admin           0.000GB
+config          0.000GB
+learning_mongo  0.001GB
+local           0.000GB
+test            0.000GB
+users           0.000GB
+> use learning_mongo
+switched to db learning_mongo
+> show collections
+cars
+numbers
+numbers1
+tours
+> db.tours.count()
+29
+> db.tours.find()
+
+> db.tours.find({"tourTags":"hiking"})
+
+> db.tours.find({"tourLength":{$gt:2}})
+
+> db.tours.find({"tourLength":{$lt:1}})
+
+> db.tours.find({"tourPrice":{$lt:350}})
+
+> db.tours.find({"tourTags":"wine"})
+
+> db.tours.insert({
+... "tourName":"The Wines of Santa Cruz",
+... "tourLength":3
+... ,"tourDescription":"Discover the winyards of Santa Cruz",
+... "tourPrice":500,
+... "tourTags":["wine","Santa Cruz"]}
+... )
+
+> db.tours.find({"tourTags":"wine"})
+
+> db.tours.update({"tourName":"The Wines of Santa Cruz"},{$set:{"tourRegion":"Central Coast"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.tours.update({"tourName":"The Wines of Santa Cruz"},{$addToSet:{"tourTags":"boardwalk"}})
+
+> db.tours.find({"tourTags":"wine"})
+> db.tours.remove({"tourName":"The Wines of Santa Cruz"})
+WriteResult({ "nRemoved" : 1 })
+
+> db.tours.find({"tourTags":"wine"})
+
+db.tours.drop() --> For dropping collection
+
+> db.tours.drop()
+true
+
+Feb 7:
+
+Select Numbers from numbers;
+> db.numbers.distinct("Numbers")
+
+> db.tour.distinct("tourTags")
+
+> db.tour.find({"tourLength":{$gt:2}}).pretty()
+
+> db.tour.find({"tourPrice":{$ne:300}}).pretty()
+
+> db.tour.find({"tourLength":{$gte:3}}).pretty()
+
+Feb 8:
+
+> db.tour.count({"tourLength":{$gte:3}})
+
+> db.tour.count({"tourTags":"wine"})
+
+> db.tour.renameCollection("tours")
+
+> db.tours.insert({"tourName":"The wines of Santa Cruz",
+... "tourDescription":"Explore the vinyards and wineries of Santa Cruz",
+... "tourLength":3,
+... "tourPrice":500}
+... )
+
+> db.tours.find({"tourTags":"wine"}).count()
+1
+
+> db.tours.update({"tourName":"The wines of Santa Cruz"},{$set:{"tourTags":"wine"}})
+
+> db.tours.find({"tourTags":"wine"}).pretty()
+
+> db.tours.count({"tourTags":"wine"})
+
+> db.tours.update({"tourName":"The wines of Santa Cruz"},{$set:{"tourRegion":"Central Coast"}})
+
+> db.tours.update({"tourName":"the wines of Santa Cruz"},{$addToSet:{"tourTags":"boardwalk"}})
+
+> db.tours.find({"tourPackage":"Taste of California"}).explain("executionStats")
+
+> db.tours.createIndex({tourPackage:1})
+
+> db.tours.find({"tourLength":{$lte:3}}).count()
+
+> db.tours.find({"tourLength":{$lte:3},"tourPrice":{$lte:500}}).pretty()
+
+> db.tours.find({"tourLength":{$lte:2},"tourPrice":{$lte:400}}).count()
+
+> db.tours.find({"tourPrice":{$lte:400},"tourLength":{$lte:2}}).explain("executionStats")
+
+-----------------------Composite Index-----------------------
+Do not use quotation marks for attributes, this following command converts 2 of the fields as indexes, can create unto 64 indexes in a collection.
+
+> db.tours.createIndex({tourPrice:1,tourlength:1})
+
+For same kind of conditions, tourLength repeated twice, using and:
+
+> db.tours.find({$and:[{tourLength:{$gte:2}},{tourLength:{$lte:4}}]})
+
+> db.tours.find({$and:[{tourLength:{$gte:2}},{tourPrice:{$lte:300}}]})
+
+OR
+
+> db.tours.find({$and:[{tourLength:{$gte:2},tourPrice:{$lte:300}}]})
+
+> db.tours.find({$and:[{tourLength:{$gte:2},tourPrice:{$lte:300}}]}).count()
+
+Feb 11:
+
+> db.tours.find({$and:[{tourLength:{$gte:2}},{tourLength:{$gte:4}}]}).pretty()
+
+Remove all documents (Truncate):
+
+> db.tours.remove({})
+
+> db.tours.createIndex({tourName:1},{unique:true})
+
+(base) mac@A1990 Start % mongoimport --collection tours --db learning_mongo --file tours.json --jsonArray
+continuing through error: E11000 duplicate key error collection: learning_mongo.tours index: tourName_1 dup key: { tourName: "Big Sur Retreat" }
+
+Remove Collection (Delete):
+> db.tours.drop()
+
+> db.tours.getIndexes()
+
+Feb 12:
+
+> db.tours.find({$and:[{tourLength:{$gte:2}},{tourPrice:{$gte:200}}]}).pretty()
+
+> db.tours.createIndex({tourName:1},{unique:true})
+
+> db.tours.distinct("tourName");
+
+> db.tours.drop()
+
+(base) mac@A1990 Start % mongoimport --collection tours --db learning_mongo --file tours.json --jsonArray
+
+> db.tours.find({},{"tourName":1})
+
+> db.tours.find({},{"tourName":1,_id:0})
+
+> db.tours.find({},{_id:0,tourName:1,tourLength:1,tourPrice:1}
+
+> db.tours.find({},{_id:0,tourName:1,tourPrice:1,tourLength:1}).pretty()
+
+> db.tours.find({},{_id:0,tourName:1,tourPrice:1,tourLength:1}).pretty().sort({tourPrice:-1})
+
+> db.tours.find({},{_id:0,tourName:1,tourBlurb:1,tourPrice:1}).pretty().sort({tourPrice:1})
+
+> db.tours.find({},{_id:0,tourName:1,tourPrice:1,tourLength:1}).pretty().sort({tourPrice:-1,tourLength:1})
+
+> db.tours.find({},{_id:0,tourName:1,tourPrice:1,tourLength:1}).pretty().sort({tourPrice:-1,tourLength:1}).limit(5)
+
+> db.tours.find({},{_id:0,tourName:1,tourPrice:1,tourLength:1}).pretty().sort({tourName:1,touPrice:-1}).limit(10).skip(2)
+
+> db.tours.distinct("tourTags")
+
+> db.tours.find({},{_id:0,tourTags:1})
+
+> db.tours.find({"tourTags":"boating"}).pretty()
+
+> db.tours.find({"tourPrice":{$gte:200,$lte:400}}).pretty()
+
+> db.tours.find({$and:[{tourPrice:{$gte:500}},{tourPrice:{$lte:1000}}]}).pretty()
+
+Feb 22:
+
+> db.tours.find({},{_id:0,tourName:1,tourPrice:1,tourBlurb:1}).pretty().sort({tourLength:-1}).limit(2).skip(1)
+
+> db.tours.find({tourPrice:{$gte:100, $lte:1000}}).pretty()
+
+> db.tours.find({$and:[{tourPrice:{$gte:200}},{tourLength:{$lte:4}}]}).pretty()
+
+> db.tours.createIndex({tourDescription:"text",tourBlurb:"text"})
+
+> db.tours.find({$text:{$search:"kids"}}).pretty()
+
+> db.tours.find({$text:{$search:"kids"}}).count()
+
+Feb 27: 
+
+> db.tours.find({},{_id:0,tourName:1, tourPrice:1}).sort({tourPrice:-1}).pretty()
+
+> db.tours.find({},{_id:0, tourBlurb:1, tourName:1, tourPrice:1}).sort({tourPrice:-1}).limit(10).skip(1).pretty()
+
+> db.tours.find({$text:{$search:"food"}}).pretty()
+
+> db.tours.find({$text:{$search:"food"}},{score:{$meta:"textScore"}}).pretty()
+
+> db.tours.find({$text:{$search:"kids"}},{score:{$meta:"textScore"}}).sort({score:{$meta:"textScore"}}).pretty()
+
+> db.tours.find({$text:{$search:"kids"}},{score:{$meta:"textScore"},_id:0,tourName:1,tourBlurb:1}).sort({score:{$meta:"textScore"}}).pretty()
+
+> db.tours.find({$and:[{tourPrice:{$gte:1000}},{tourLength:{$lte:5}}]}).pretty()
+
+> db.tours.find({$text:{$search:"wine"}},{score:{$meta:"textScore"},_id:0,tourName:1}).sort({score:{$meta:"textScore"}}).pretty()
+
+Either $text{$search:"wine"} OR two REGEX: ourDescription:/wine/i
+
+> db.tours.find({tourDescription:/wine/i},{_id:0,tourName:1}).pretty()
+
+> db.tours.find({tourDescription:/food/i},{score:{$meta:"textScore"},_id:0,tourName:1}).sort({score:{$meta:"textScore"}}).pretty()
+
+Mar 1:
+
+> db.tours.find({$text:{$search:"sky"}},{score:{$meta:"textScore"},_id:0,tourName:1}).pretty().sort({score:{$meta:"textScore"}})
+
+> db.tours.find({$text:{$search:"food"}},{score:{$meta:"textScore"},_id:0,tourName:1,tourPrice:1}).sort({score:{$meta:"textScore"}}).pretty()
+
+> db.tours.find({tourDescription:/food/i},{_id:0,tourName:1,tourBlurb:1}).pretty()
+
+> db.tours.find({tourDescription:/coast/i},{_id:0,tourName:1,tourPrice:1}).sort({tourPrice:-1}).pretty()
+
+(base) mac@A1990 Start % mongoimport --collection people --db learning_mongo --file people.json --jsonArray
+
+(base) mac@A1990 Start % mongoimport --db learning_mongo --collection movies --file movies.json --jsonArray
+
+> db.people.find({_id:/Brad Pitt/i}).pretty()
+
+> db.people.find({movies:/Avengers/i}).pretty()
+
+> db.people.find({movies:/The Avengers/i},{_id:1}).pretty()
+
+> db.tours.find({$text:{$search:"drink"}},{score:{$meta:"textScore"},_id:0,tourName:1,tourPrice:1}).sort({score:{$meta:"textScore"}}).pretty()
+
+> db.tours.find({tourDescription:/drink/i}).sort({tourPrice:1}).pretty()
+
+> db.tours.find({tourDescription:/drink/i}).sort({tourPrice:1}).pretty()
+
+> db.people.find({_id:/brad pitt/i}).pretty()
+
+> db.movies.find({_id:/inglourious/i}).pretty()
+
+> var moviename="The Avengers";
+
+> var moviedoc=db.movies.find({_id:moviename}).pretty()
+
+> moviedoc.cast=[]
+
+> db.people.find({movies:moviename},{_id:1})
+
+> var castArray=db.people.find({movies:moviename},{_id:1}).pretty()
+
+> castArray.forEach(function(i){
+... moviedoc.cast.push(i)})
+
+Mar 3:
+
+> var moviename="The Avengers";
+> moviename
+> var moviedoc=db.movies.find({_id:moviename}).pretty()
+> moviedoc.cast=[]
+> var castArray = db.people.find({movies:moviename}).pretty()
+> castArray.forEach(function(i){
+... moviedoc.cast.push(i)})
+
+> db.tours.find({},{tourPackage:1}).pretty()
+
+
+> db.tours.find({},{tourPackage:1}).count()
+
+> db.tours.count({tourPackage:/Cycle California/i})
+
+> db.tours.aggregate([{$group:{_id:'$tourPackage', count:{$sum:1}}}])
+
+> db.tours.aggregate([{$group:{_id:"$tourOrganizer.organizerName", count:{$sum:1}}}])
+
+> db.tours.aggregate([{$group:{_id:"$tourOrganizer.organizerName", count:{$sum:1}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourOrganizer.organizerPhone',Total:{$sum:1}}}])
+
+> db.tours.aggregate([{$group:{_id:'$tourDifficulty', Total:{$sum:1}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourDifficulty',Total:{$sum:'$tourPrice'}}}])
+
+> db.tours.aggregate([{$group:{_id:'$tourPackage',average:{$avg:'$tourPrice'}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourPrice',Total:{$sum:1}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourPackage',AverageTourPrice:{$avg:'$tourPrice'}}}]).pretty()
+
+Mar 8:
+
+> db.tours.find({$text:{$search:'wine'}},{score:{$meta:'textScore'},_id:0,tourName:1}).pretty().sort({score:{$meta:'textScore'}})
+
+> db.tours.find({tourName:/California/i},{_id:0,tourBlurb:1,tourPrice:1}).pretty().sort({tourPrice:-1})
+
+> db.tours.aggregate([{$group:{_id:'$tourPackage',AverageTourPrice:{$avg:'$tourPrice'}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourOrganizer.organizerName',Count:{$sum:1}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourPackage',AvgPrice:{$avg:'$tourPrice'}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourPackage',AvgPrice:{$sum:'$tourPrice'},Count:{$sum:1}}}]).pretty()
+
+> db.tours.aggregate([{$group:{_id:'$tourOrganizer.organizerName',Count:{$sum:1}}},{$out:'OrganizerCount'}])
+
+> db.OrganizerCount.find()
+
+> db.tours.aggregate([{$group:{_id:'$tourPackage',AvgPrice:{$avg:'$tourPrice'},Count:{$sum:1}}},{$out:'Packagedetails'}])
+
+> db.Packagedetails.find()
+
+> db.tours.aggregate([{$group:{_id:'$tourOrganizer.organizerName',Count:{$sum:1}}},{$out:'organizercount'}])
+
+> db.organizercount.find()
+
+> db.tours.find({tourPrice:{$gte:400}}).count()
+
+
+> db.tours.find({$and:[{'tourPrice':{$gte:200},tourPrice:{$lte:1000}}]}).pretty()
+
+(base) mac@A1990 mongodb-lrshpak-master % mongoimport --db learning_mongo --collection courses --file courses.json --jsonArray
+
+(base) mac@A1990 mongodb-lrshpak-master % mongoimport --db learning_mongo --collection faculty --file faculty.json --jsonArray
+
+(base) mac@A1990 mongodb-lrshpak-master % mongoimport --db learning_mongo --collection students --file students.json --jsonArray
+
+Mar 10:
+
+> db.courses.find({course_number:/6331/i}).pretty()
+
+> db.courses.find({taught_by:/poorvi/i}).pretty()
+
+> db.courses.count()
+
+
+{
+	"name" : "Conan O'Brien",
+	"phone" : "444-222-6666",
+	"address" : {
+		"house_number" : "210",
+		"street" : "Hollywood Blvd",
+		"city" : "Los Angeles",
+		"state" : "California"
+	},
+	"major" : "Comical Writing",
+	"minor" : "Literature",
+	"advisor" : "David Letterman"
+}
+
+> db.students.insert({name:'Jimmy Fallon', phone:'333-666-9999' ,nickname:'Jim', major:'House Keeping' })
+
+> db.students.find({name:/conan/i},{advisor:1,_id:0}).pretty()
+
+> db.students.find({name:/conan/i},{name:1, advisor:1, _id:0}).pretty()
+
+> db.students.update({name:/conan/i},{$set:{advisor:"Anderson Cooper"}})
+
+> db.courses.insert({course_number:/3212/i},{$set:{taught_by:"Gabriel Palmer"}})
+
+> db.courses.insert({ "course_name" : "Algorithms", "course_number" : "CSCI3212", "capacity" : 60, "prerequisites" : [ "Discrete Structures 1", "Software Engineering" ]})
+
+> db.courses.update({course_number:/3212/i},{$set:{taught_by:"Gabriel Palmer"}})
+
+
+> db.courses.update({course_number:/3212/i},{$set:{taught_by:["Gabe Palmer"]}})
+
+> db.courses.update({course_number:/3212/i},{$set:{taught_by:["Amrinder Arora"]}})
+
+Completely updates Gabe
+
+> db.courses.update({course_number:/3212/i},{$set:{taught_by:["Amrinder Arora", "Gabe Palmer" ]}})
+
+> db.students.deleteOne({name:/don/i})
+
+
+> db.students.insert({name:"Donald J. Trump", phone:[{number:"222-333-4444", type:"Home"}, {number:"222-111-3333", type:"Work"}], major:"Public Health", minor:"Biology", minor1: "Physics", minor2: "General Knowledge", minor3:"Computer Science"})
+
+> db.students.update({name:/don/i},{$set:{advisor:"Barack H.Obama"}})
+
+Mar 11:
+
+> db.courses.insert({course_name:"Database Systems 2", course_number:"CSCI6442", taught_by:["Dave Roberts","Ayush Singh"], capacity:"30", level:"graduate"})
+
+> db.courses.find({course_number:/6442/i}).pretty()
+
+> db.courses.find({taught_by:/singh/i})
+
+> db.courses.find({taught_by:/vo/i}).pretty()
+
+> db.courses.update({course_number:/6331/i},{teaching_assistant:["Katie Bramlett","Grady McPeak","Ada Kilic"]})
+
+> db.courses.deleteOne({teaching_assistant:/mcpeak/i})
+
+> db.courses.update({course_number:/6331/i},{$set:{teaching_assistant:["Katie Bramlett","Genevieve Flynn","Ada Kilic"]}})
+
+> db.courses.find({teaching_assistant:/kil/i}).pretty()
+
+> db.faculty.insert({name:"Barack H. Obama", department:"Criminal Law", research_area:"Healthcare", courses:["ObamaCare 101", "How to give Presidential Medals of Freedom to VPs", "Zero Dark Thirty 201"], previous_roles:["POTUS","Author of acclaimed netflix series named Barack The House"]})
+WriteResult({ "nInserted" : 1 })
+
+> db.faculty.find({courses:/vp/i}).pretty()
+
+> db.faculty.update({name:/Obama/i},{$set:{research_area:["Healthcare", "Military Operations", "Parenting"]}})
+
+> db.faculty.update({name:/Obama/i},{$set:{research_area:["Healthcare", "Military Operations", "Parenting","SOTU Speeches"],department:["Criminal Law","Business Analysis","Literature"]}})
+
+Mar 13:
+
+> db.students.update({name:/hasan/i},{$set:{GPA:NumberDecimal("3.0")}})
+
+> db.students.find({GPA:{$gte:2.5}})
+
+> db.students.find({GPA:{$gte:3.0}}).pretty().sort({GPA:1})
+
+> db.students.find({GPA:{$lt:3.0}}).pretty()
+
+> db.students.find({GPA:{$eq:3.0}})
+
+> db.students.count({GPA:{$ne:4.0}})
+
+> db.students.find({$and:[{GPA:{$gte:3.3},GPA:{$lte:3.9}}]}).pretty()
+
+> db.students.find({GPA:{$exists:1}}).pretty()
+
+> db.students.find({advisor:{$exists:0}}).pretty()
+
+> db.students.find().pretty().sort({name:-1})
+
+Mar 14:
+
+> db.courses.find({teaching_assistant:{$in:[/ada/i]}})
+
+> db.courses.find({taught_by:{$nin:[/Pless/i]}}).pretty()
+
+> db.courses.find({taught_by:{$nin:[/narahari/i]}}).pretty()
+
+> db.courses.find({taught_by:{$nin:[/narahari/i]}},{_id:0,course_number:1}).pretty()
+
+> db.students.find({name:/hasan/i}).pretty()
+
+> db.students.find({name:/joe/i},{_id:0,name:1,advisor:1}).pretty()
+
+> db.courses.find({capacity:{$exists:0}}).pretty()
+
+> db.students.update({name:/chris/i},{$set:{minor:"Music"},$currentDate:{lastModified:true}})
+
+> db.students.find({lastModified:{$exists:1}}).pretty()
+
+> db.students.update({name:/joe/i},{$set:{advisor:"Rolando Fernandez"},$currentDate:{lastModified:true}})
+
+> db.students.update({name:/chris/i},{$set:{minor:"Music"},$currentDate:{lastModified:true}})
+
+We have to run $currentDate:{lastModified:true} whenever we want to update the time.
+
+> db.students.updateOne({name:/chris/i},{$unset:{GPA:NumberDecimal("3.1")}})
+
+> db.students.update({name:/chris/i},{$set:{GPA:NumberDecimal("3.0")},$currentDate:{lastModified:true}})
+
+> db.students.update({name:/chris/i},{$unset:{GPA:NumberDecimal("3.0")},$currentDate:{lastModified:true}})
+
+Mar 17:
+
+> db.students.update({name:/donald/i},{$set:{GPA:NumberDecimal("2.6")},$currentDate:{lastModified:true}})
+
+> db.students.update({name:/donald/i},{$unset:{GPA:NumberDecimal("2.6")},$currentDate:{lastModified:true}})
+
+> db.students.update({name:/aubrey/i},{$set:{GPA:NumberDecimal("4.0")}})
+
+> db.students.updateOne({name:/donald/i},{$set:{phone:[{number:"222-444-1111",type:"Home"},{number:"111-888-9900",type:"Work"}]}})
+
+> db.students.updateMany({GPA:NumberDecimal("4.0")},{$set:{major:"Arts"},$currentDate:{lastModified:true}})
+
+> db.students.find({lastModified:{$exists:1}}).pretty()
+
+> db.courses.replaceOne({course_number:/1311/i},{"course_name" : "Discrete Structures 1", "course_number" : "CSCI1311", "taught_by" : ["Poorvi Vora"], "capacity" : 60, "level": "graduate"})
+
+Copy Collections:
+
+db.courses.find().forEach(function(f){db.getSiblingDB('ayushsingh')['courses'].insert(f);});
+
+db.students.find().forEach(function(d){db.getSiblingDB('ayushsingh')['students'].insert(d);});
+
+mongoimport --authenticationDatabase admin -u ayushsingh -p password --db ayushsingh --collection faculty --file faculty.json --jsonArray
+
+https://classroom.github.com/a/CoPcDEm5
+
+{name:"Miley Cyrus",
+phone:[{phone_number:"111-111-2222",type:"Home"},
+{phone_number:"222-222-3333",type:"mobile"}],
+major:"Vocal Music",
+minor:"Instrumental Music",
+advisor:"Ayush Singh"
+}
+
+https://gwu.box.com/s/inroq9df7uefs1r2ifscsbqtk25vmbka
+ https://gwu.box.com/s/hbpzxpykvv1aduog5dfhh7ab930gsrff
+ https://gwu.box.com/s/rcdkyev8pirbz3y6irqyyhpjnhlql9iv
+https://classroom.github.com/a/CoPcDEm5
+
+{name:"Hannah Montana",
+phone:[{phone_number:"222-222-2222", type:"home"},
+{phone_number:"333-333-3333",type:"work"}],
+major:"Computer Science",
+minor:"Math",
+advisor:"Tim Wood"
+}
+
+Fields inside a document.
+
+> db.courses.find({"lab.ta":{$exists:1}})
+
+> Object.keys(db.courses.findOne())
+
+> db.courses.find({course_name:/research/i,advisor:/tim/i}).pretty()
+
+> db.statuses.distinct("user.name",{"user.name":{$ne:"Donald J. Trump"}})
+
+1. Top five status tweeters.
+> db.statuses.aggregate([{$group:{_id:"$user.name",count:{$sum:1}}},{$sort:{count:-1}},{$limit:5}])
+
+2. Count users with most followers from statuses.
+> db.statuses.aggregate([{$group:{_id:"$user.name",followers:{$max:"$user.followers_count"}}},{$sort:{followers:-1}}])
+
+$sortByCount:
+
+> db.favorites.aggregate([{$group:{_id:"$user.name",count:{$sum:1}}},{$sort:{count:-1}}])
+> db.favorites.aggregate([{$sortByCount:"$user.name"}])
+
+> db.statuses.aggregate([{$match:{"user.name":"Donald J. Trump","lang":"en"}}]).pretty()
+
+> db.statuses.find({$and:[{"user_mentions.name":{$exists:1}},{"user.name":"Donald J. Trump"}]},{"user.name":1,user_mentions:1,_id:0}).count()
+
+Find a datatype for an attribute
+db.tours.findOne({tourLength:{$type:"int"}})
+
+Apr 26:
+
+UNIX: 
+head CA_DRU_proj_2010-2060.csv  
+head movies.json
+
+MongoImport CSV files:
+mongoimport --db learning_mongo --collection population --file CA_DRU_proj_2010-2060.csv --type csv --headerline
+
+(Instead of using jsonArray, use --type to let mongo know its a csv file, --headerline ensures that the first row of the csv file will be the attributes)
+
+mongoimport --db learning_mongo --collection vehicles --file Vehicles_2015.csv --type csv --headerline
+
+mongoimport --db learning_mongo --collection accidents --file Accidents_2015.csv --type csv --headerline 
+
+mongoimport --db learning_mongo --collection vehicle_type --file Road-Accident-Safety-Data-Guide.csv --type csv --headerline
+
+> db.accidents.createIndex({Accident_Index:1})
+> db.vehicles.createIndex({Accident_Index:1})
+
+> db.accidents.find({},{Accident_Severity:1,_id:0}).pretty()
+> db.vehicles.find({},{"Vehicle_Type":1,_id:0}).pretty()
+
+> db.accidents.aggregate([{$lookup:{from:"vehicles", localField:"Accident_Index", foreignField:"Accident_Index", as:"Vehicles"}}, {$unwind:"$Vehicles"}, {$project:{_id:0,"Accident_Index":1,"Accident_Severity":1,Vehicle_Type:"$Vehicles.Vehicle_Type"}}, {$out:"combined"}])
+
+$lookup will create a new attribute inside the accidents named vehicles which will have all the the matching attributes from the vehicles collection. 
+
+$unwind: using this because the new attribute in the accident tables is being saved as an array, unwind those values.
+
+$project: select what you want from it, for $Vehicle_Type, we did Vehicle_Type:"$Vehicles.Vehicle_Type" specifically because it is in the Vehicle attribute that we just made, but Accident Severity and Accident Index is taken from the accident collection.
+
+$out: to select a name for the projected attributes and save them.
+
+> db.vehicle_type.find().forEach(function(a){db.combined.updateMany({Vehicle_Type:a.code},{$set:{Vehicle_Type:a.label}})})
+
+forEach: the finding and the assigning value is a.code and a.label without the commas, because a is an object, different from lets say user.name where user is an attribute.
+
+> db.combined.aggregate([{$group:{_id:"$Vehicle_Type",total:{$sum:1}}}])
+
+> db.combined.aggregate([{$match:{Vehicle_Type:/motorcycle/i}},{$group:{_id:"$Vehicle_Type",total:{$sum:1}}}]) 
+
+> db.combined.aggregate([{$match:{Vehicle_Type:/motor/i}},{$group:{_id:"$Vehicle_Type",averageSeverity:{$avg:"$Accident_Severity"},total:{$sum:1}}}])
+
+> db.population.aggregate([{$match:{"Year":2014}},{$group:{_id:{"County_Name":"$County Name","Gender":"$Gender"},pop:{$sum:"$Population"}}},{$sort:{pop:-1}}])
+
+db.population.aggregate([{$match:{"Year":2014,"Gender":"Female"}},{$group:{_id:{"County_Name":"$County Name","Gender":"$Gender"},pop:{$sum:"$Population"}}},{$sort:{pop:-1}}])
+
+> db.population.aggregate([{$match:{"Gender":"Male"}},{$group:{_id:{"County Name":"$County Name","Gender":"$Gender"},Population:{$sum: "$Population"}}},{$sort:{Population:-1}}])
+
+> db.population.aggregate([{$match:{"County Name":"Los Angeles"}},{$group:{_id:{"County Name":"$County Name","Gender":"$Gender"},Population:{$sum:"$Population"}}}])
+
+> db.population.aggregate([{$match:{"Year":2016,"County Name":/francisco/i}},{$group:{_id:{"County Name":"$County Name","Gender":"$Gender"},Population:{$sum:"$Population"}}}])
+
+> db.population.aggregate([{$match:{Year:2014}},{$project:{"County Name":1,"Female":{$cond:[{$eq:["$Gender","Female"]},"$Population",0]},"Male":{$cond:[{$eq:["$Gender","Male"]},"$Population",0]}}},{$group:{_id:"$County Name",Female:{$sum:"$Female"},Male:{$sum:"$Male"}}}])
+
+> db.population.aggregate([{$match:{Year:2014}},{$project:{"County Name":1,"Female":{$cond:[{$ne:["$Gender","Male"]},"$Population",0]},"Male":{$cond:[{$ne:["$Gender","Female"]},"$Population",0]}}},{$group:{_id:"$County Name",Female:{$sum:"$Female"},Male:{$sum:"$Male"}}}])
+
+> db.population.aggregate([{$match:{"Year":2014}},{$project:{"County Name":1, "Male":{$cond:[{$eq:["$Gender","Male"]},"$Population",0]},"Female":{$cond:[{$eq:["$Gender","Female"]},"$Population",0]}}},{$group:{_id:"$County Name","Male Population":{$sum:"$Male"},"Female Population":{$sum:"$Female"}}},{$sort:{"Male Population":-1,"Female Population":-1}}])
+
+mongoimport --db learning_mongo --collection population --file CA_DRU_proj_2010-2060.csv --type csv --headerline --drop
+
+mongoimport --db learning_mongo --collection education --file CA_Educational_Attainment___Personal_Income_2008-2014.csv --type csv --headerline --drop
+
+> db.education.find().limit(5).pretty()
+
+> db.education.distinct("Educational Attainment")
+
+> db.education.find({"Educational Attainment" : "No high school diploma"}).count()
+
+> db.education.find({"Educational Attainment":"Children under 15"}).count()
+
+> db.education.find({"Educational Attainment":"Some college, less than 4-yr degree"}).count()
+
+> db.education.find({"Educational Attainment":"High school or equivalent"}).count()
+
+> db.education.find({"Educational Attainment":"Bachelor's degree or higher"}).count()
+
+> db.education.find({"Personal Income":"$75,000 and over"}).count()
+
+> db.education.aggregate([{$group:{_id:"$Educational Attainment",total_population:{$sum:1}}}])
+
+> db.education.aggregate([{$group:{_id:"$Educational Attainment",total_population:{$sum:"$Population Count"}}}])
+
+> db.education.aggregate([{$group:{_id:"$Personal Income","income_population":{$sum:"$Population Count"}}}])
+
+> db.education.aggregate([{$group:{_id:"$Age",age_population:{$sum:"$Population Count"}}}])
+
+> db.education.aggregate([{$match:{"Educational Attainment":"High school or equivalent"}},{$group:{_id:"$Personal Income",Resp_Pop:{$sum:"$Population Count"}}}])
+
+> db.population.updateMany({"Age":{$lte:17}},{$set:{"Age":"00 to 17"}})
+
+> db.population.updateMany({"Age":{$gte:65}},{$set:{"Age":"65 to 80+"}})
+
+> db.population.find({"Age":{$gte:18},"Age":{$lte:64}}).count()
+
+> db.population.updateMany({"Age":{$gte:18},"Age":{$lte:64}},{$set:{"Age":"18 to 64"}})
+
+> db.population.aggregate([{$project:{Age:1,Population:1,Year:1,_id:0}},{$group:{_id:{"Age":"$Age","Year":"$Year"},count:{$sum:"$Population"}}},{$out:"poptotal"}])
+
+> db.education.aggregate([{$project:{_id:0,"Educational Attainment":1,"Age":1,"Population Count":1}},{$group:{_id:{"Age":"$Age","Educational Attainment":"$Educational Attainment"},total:{$sum:"$Population Count"}}},{$out:"attain"}])
+
+> db.attain.aggregate([{$project:{"Age":"$_id.Age","Educational Attainment":"$_id.Educational Attainment",total:1,_id:0}},{$group:{_id:"$Age",count:{$sum:"$total"}}},{$out:"agetotals"}])
+
